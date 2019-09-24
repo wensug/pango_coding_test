@@ -59,31 +59,47 @@ class Form extends React.Component {
     influencerUsageFee: '',
     influencerTotalFee: 0,
     postOptions: ['Post', 'Story', 'Video'],
-    contentOptions: [
-      'Event',
-      'Influencer blog content',
-      'Brand Website content',
-      'Newsletter',
-      'In-store appearance',
-      'Other',
-    ],
   };
 
-  handleChange(event) {
-    const target = event.target;
-    const name = target.name;
-    this.setState({
-      [name]: value
-    });
+  onChangeFee(e) {
+    this.setState({ influencerFee: e.target.value });
   }
 
+  onChangeUsageFee(e) {
+    this.setState({ influencerUsageFee: e.target.value });
+  }
+
+  onChangeTotalFee(e) {
+    this.setState({ influencerTotalFee: e.target.value });
+  }
+
+  onChangePost(e) {
+    this.setState({ postOptions: e.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault(event);
+    const data = this.state; // data can be used to send the data to the server
+    console.log(data);
+  }
+
+  handleClearForm(event) {
+    event.preventDefault();
+    this.setState({
+      influencerFee: '',
+      influencerUsageFee: '',
+      influencerTotalFee: 0,
+      postOptions: [],
+    });
+    //redirect the HomePage
+  }
 
   render() {
     return (
       <PageSection>
         <h1>Define Influencer Deliverables</h1>
         <span>0 of 2 complete</span>
-        <form>
+        <form onSubmit={e => this.handleSubmit(e)}>
           <FormSection>
             <header>
               <h1>{this.state.influencerName}</h1>
@@ -96,10 +112,9 @@ class Form extends React.Component {
                   How much are you paying Zoe for the agreed deliverables?
                 </SubLabel>
                 <input
-                  name="influencerFee"
                   type="number"
                   value={this.state.influencerFee}
-                  onChange={e => this.handleChange(e)}
+                  onChange={e => this.onChangeFee(e)}
                 />
               </div>
               <div>
@@ -108,19 +123,17 @@ class Form extends React.Component {
                   Are you paying Zoe a usage fee for this content?
                 </SubLabel>
                 <input
-                  name="influencerUsageFee"
                   type="number"
                   value={this.state.influencerUsageFee}
-                  onChange={e => this.handleChange(e)}
+                  onChange={e => this.onChangeUsageFee(e)}
                 />
               </div>
               <div>
                 <Label>Total fee:</Label>
                 <input
-                  name="influencerTotalFee"
                   type="number"
                   value={this.state.influencerTotalFee}
-                  onChange={e => this.handleChange(e)}
+                  onChange={e => this.onChangeTotalFee(e)}
                 />
               </div>
             </SectionOne>
@@ -135,7 +148,7 @@ class Form extends React.Component {
                   options={this.state.postOptions}
                   value={this.state.postOptions.value}
                   placeholder={'Select post type'}
-                  handleChange={this.handleInput}
+                  onChange={e => this.onChangePost(e)}
                 />
               </div>
               <div>
@@ -145,7 +158,7 @@ class Form extends React.Component {
                   options={this.state.postOptions}
                   value={this.state.postOptions.value}
                   placeholder={'Select post type'}
-                  handleChange={this.handleInput}
+                  onChange={e => this.onChangePost(e)}
                 />
               </div>
               <div>
@@ -155,14 +168,14 @@ class Form extends React.Component {
                   options={this.state.postOptions}
                   value={this.state.postOptions.value}
                   placeholder={'Select post type'}
-                  handleChange={this.handleInput}
+                  onChange={e => this.onChangePost(e)}
                 />
               </div>
             </SectionTwo>
             <UnderLine />
             <div>
               <button>Save</button>
-              <button>Cancel</button>
+              <button onClick={e => this.handleClearForm(e)}>Cancel</button>
             </div>
           </FormSection>
         </form>

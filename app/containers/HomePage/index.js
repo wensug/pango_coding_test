@@ -17,7 +17,6 @@ export default function HomePage() {
         <FormattedMessage {...messages.header} />
       </h1>
       <Form />
-
     </div>
   );
 }
