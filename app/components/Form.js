@@ -54,12 +54,10 @@ const UnderLine = styled.div`
 
 class Form extends React.Component {
   state = {
-    influencer: {
-      name: 'Zoe Sugg',
-      fee: '',
-      usageFee: '',
-      totalFee: 0,
-    },
+    influencerName: 'Zoe Sugg',
+    influencerFee: '',
+    influencerUsageFee: '',
+    influencerTotalFee: 0,
     postOptions: ['Post', 'Story', 'Video'],
     contentOptions: [
       'Event',
@@ -71,7 +69,15 @@ class Form extends React.Component {
     ],
   };
 
-  handleChange() {}
+  handleChange(event) {
+    const target = event.target;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    });
+  }
+
+
   render() {
     return (
       <PageSection>
@@ -80,19 +86,19 @@ class Form extends React.Component {
         <form>
           <FormSection>
             <header>
-              <h1>{this.state.influencer.name}</h1>
+              <h1>{this.state.influencerName}</h1>
             </header>
             <UnderLine />
             <SectionOne>
               <div>
-                <Label>Influencer Fee </Label>
+                <Label>Influencer Fee</Label>
                 <SubLabel>
                   How much are you paying Zoe for the agreed deliverables?
                 </SubLabel>
                 <input
-                  name="fee"
+                  name="influencerFee"
                   type="number"
-                  value={this.state.influencer.fee}
+                  value={this.state.influencerFee}
                   onChange={e => this.handleChange(e)}
                 />
               </div>
@@ -102,18 +108,18 @@ class Form extends React.Component {
                   Are you paying Zoe a usage fee for this content?
                 </SubLabel>
                 <input
-                  name="usageFee"
+                  name="influencerUsageFee"
                   type="number"
-                  value={this.state.influencer.usageFee}
+                  value={this.state.influencerUsageFee}
                   onChange={e => this.handleChange(e)}
                 />
               </div>
               <div>
                 <Label>Total fee:</Label>
                 <input
-                  name="totalFee"
+                  name="influencerTotalFee"
                   type="number"
-                  value={this.state.influencer.totalFee}
+                  value={this.state.influencerTotalFee}
                   onChange={e => this.handleChange(e)}
                 />
               </div>
@@ -154,7 +160,6 @@ class Form extends React.Component {
               </div>
             </SectionTwo>
             <UnderLine />
-
             <div>
               <button>Save</button>
               <button>Cancel</button>
