@@ -74,13 +74,14 @@ class Form extends React.Component {
   }
 
   onChangePost(e) {
-    this.setState({ postOptions: e.target.value });
+    this.setState(
+      { postOptions: [...new Set(this.state.postOptions, e.target.value)] },
+      console.log(this.state),
+    );
   }
-
   handleSubmit(event) {
     event.preventDefault(event);
     const data = this.state; // data can be used to send the data to the server
-    console.log(data);
   }
 
   handleClearForm(event) {
@@ -91,10 +92,12 @@ class Form extends React.Component {
       influencerTotalFee: 0,
       postOptions: [],
     });
-    //redirect the HomePage
+    // redirect the HomePage
   }
 
   render() {
+    const { influencerFee, influencerUsageFee } = this.state;
+    const total = +influencerFee + +influencerUsageFee;
     return (
       <PageSection>
         <h1>Define Influencer Deliverables</h1>
@@ -133,6 +136,7 @@ class Form extends React.Component {
                 <input
                   type="number"
                   value={this.state.influencerTotalFee}
+                  value={total}
                   onChange={e => this.onChangeTotalFee(e)}
                 />
               </div>
@@ -143,32 +147,32 @@ class Form extends React.Component {
               <p>What posts have you asked Zoe to do?</p>
               <div>
                 <Select
-                  title={'INSTAGRAM'}
-                  name={'instagram'}
+                  title="INSTAGRAM"
+                  name="instagram"
                   options={this.state.postOptions}
                   value={this.state.postOptions.value}
                   placeholder={'Select post type'}
-                  onChange={e => this.onChangePost(e)}
+                  onChangePost={this.onChangePost.bind(this)}
                 />
               </div>
               <div>
                 <Select
-                  title={'YOUTUBE'}
-                  name={'youtube'}
+                  title="YOUTUBE"
+                  name="youtube"
                   options={this.state.postOptions}
                   value={this.state.postOptions.value}
                   placeholder={'Select post type'}
-                  onChange={e => this.onChangePost(e)}
+                  onChangePost={this.onChangePost.bind(this)}
                 />
               </div>
               <div>
                 <Select
-                  title={'FACEBOOK'}
-                  name={'facebook'}
+                  title="FACEBOOK"
+                  name="facebook"
                   options={this.state.postOptions}
                   value={this.state.postOptions.value}
                   placeholder={'Select post type'}
-                  onChange={e => this.onChangePost(e)}
+                  onChangePost={this.onChangePost.bind(this)}
                 />
               </div>
             </SectionTwo>
